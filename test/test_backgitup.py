@@ -7,6 +7,8 @@ from backgitup import Backgitup, BackgitupFile, system_file_name
 source_path = os.path.join(os.path.split(__file__)[0], 'test_source')
 backup_path = os.path.join(os.path.split(__file__)[0], 'test_backup')
 
+def test_method():pass
+
 
 def _create_test_repository(paths:list):
     for p in paths:
@@ -35,10 +37,13 @@ def test_create_new_and_backup():
         files = [os.path.join(source_path, 'nissefjes.txt'), os.path.join(source_path, 'trollansikt.txt')]
         for file in files:
             with open(file, 'w') as fid:
-                fid.writelines(['nisse', 'fjes'])
+                fid.writelines(['nisse\n', 'fjes\n'])
 
         assert [os.path.join(bgu.source.repo.working_dir, utf) for utf in bgu.source.repo.untracked_files] == files
         bgu.commit_all()
         assert not bgu.source.repo.untracked_files
+
+        # Create new backup:
+        # TODO: Continue here!
     finally:
         _remove_test_repository(test_paths)
